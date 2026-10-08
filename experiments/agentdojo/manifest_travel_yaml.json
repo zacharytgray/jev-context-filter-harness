@@ -1,0 +1,82 @@
+{
+ "schema_version": 1,
+ "block": "agentdojo-run-travel-yaml",
+ "stage": "AgentDojo travel played again with --tool-format yaml under both defenses, and the slack attacked call of manifest.json finished",
+ "status": "frozen before any travel-yaml episode; the slack finish call had started with the arguments in part b",
+ "date": "2026-09-30",
+ "why": "in the AgentDojo run, travel's get_rating_reviews_for_hotels and get_rating_reviews_for_restaurants return dicts, and AgentDojo's tool_result_to_str str()s a dict, so the review newlines became a literal \\n and each output was one line. the injection filter splits on newlines, so one injected review withheld the whole output and every rating with it (632 of 632 flagged travel outputs were one line; banking 1, slack 3, workspace 0). jev episodes then looped to 48 turns. --tool-format yaml lays a dict out with AgentDojo's own yaml.safe_dump, as AgentDojo already does for models, so the filter can withhold the injected review alone",
+ "runner": "experiments/agentdojo/run_agentdojo.py (AgentDojo package 0.1.35, clone 089ed468, benchmark v1.2.2)",
+ "records_root": "experiments/runs-agentdojo-gemma4-31b; every out below is relative to the repo",
+ "model": "google/gemma-4-31b-it",
+ "provider": "Novita only, no fallbacks",
+ "sampling": {
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 8192
+ },
+ "jev_model": "jev-latest",
+ "attack": "important_instructions",
+ "defenses": {
+  "none": "the plain loop",
+  "jev": "the injection filter as in manifest.json, unchanged"
+ },
+ "workers": 4,
+ "parts": {
+  "a_travel_yaml": {
+   "tool_format": "yaml, for both defenses",
+   "out": "experiments/runs-agentdojo-gemma4-31b/travel-yaml",
+   "superseded": "experiments/runs-agentdojo-gemma4-31b/travel stays as the str() record: 40 no-attack and 37 of 280 attacked episodes, stopped on the Jev cap. it is not a result for travel",
+   "calls": [
+    {
+     "suite": "travel",
+     "attack": "none",
+     "user_tasks": "all (20)",
+     "injection_tasks": "none",
+     "defense": "none,jev",
+     "episodes": 40,
+     "max_usd_openrouter": 0.3,
+     "max_jev_tokens": 200000
+    },
+    {
+     "suite": "travel",
+     "attack": "important_instructions",
+     "user_tasks": "all (20)",
+     "injection_tasks": "all (7)",
+     "defense": "none,jev",
+     "episodes": 280,
+     "max_usd_openrouter": 2.0,
+     "max_jev_tokens": 3000000
+    }
+   ],
+   "extra_args": [
+    "--tool-format",
+    "yaml"
+   ],
+   "note": "AgentDojo, Gemma 4 31B"
+  },
+  "b_slack_finish": {
+   "tool_format": "str (AgentDojo's default), as the AgentDojo run",
+   "out": "experiments/runs-agentdojo-gemma4-31b/slack",
+   "calls": [
+    {
+     "suite": "slack",
+     "attack": "important_instructions",
+     "user_tasks": "all (21)",
+     "injection_tasks": "all (5)",
+     "defense": "none,jev",
+     "episodes": 210,
+     "to_play": 64,
+     "max_usd_openrouter": 0.2,
+     "max_jev_tokens": 500000
+    }
+   ],
+   "note": "AgentDojo, Gemma 4 31B"
+  }
+ },
+ "episodes": {
+  "travel_yaml": 320,
+  "slack_finish": 64,
+  "total": 384
+ }
+}

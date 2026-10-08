@@ -1,0 +1,110 @@
+{
+ "schema_version": 1,
+ "block": "agentdojo-run",
+ "stage": "AgentDojo, all four suites: the plain loop against the injection filter, every user task without attack and every security case with important_instructions",
+ "status": "frozen before any episode",
+ "date": "2026-09-30",
+ "runner": "experiments/agentdojo/run_agentdojo.py (AgentDojo package 0.1.35, clone 089ed468, benchmark v1.2.2)",
+ "model": "google/gemma-4-31b-it",
+ "provider": "Novita only, no fallbacks",
+ "sampling": {
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "top_k": 64,
+  "max_tokens": 8192
+ },
+ "jev_model": "jev-latest",
+ "attack": "important_instructions",
+ "defenses": {
+  "none": "the plain loop",
+  "jev": "the injection filter (s1harness.pipeline.injection_filter) on every tool output, content and error text: aside at 0.5, chunks of 40 lines and 4,000 chars, the inserted-framing choice-span finder in a loop (up to 10 Jev calls a chunk), only found lines hidden (the whole chunk when none are found), request = the user task prompt, fallback open after 3 retries"
+ },
+ "workers": 4,
+ "out": "experiments/runs-agentdojo-gemma4-31b/<suite>",
+ "suite_order": [
+  "banking",
+  "slack",
+  "travel",
+  "workspace"
+ ],
+ "calls": [
+  {
+   "suite": "banking",
+   "attack": "none",
+   "user_tasks": "all (16)",
+   "injection_tasks": "none",
+   "episodes": 32,
+   "max_usd_openrouter": 0.1,
+   "max_jev_tokens": 50000
+  },
+  {
+   "suite": "banking",
+   "attack": "important_instructions",
+   "user_tasks": "all (16)",
+   "injection_tasks": "all (9)",
+   "episodes": 288,
+   "max_usd_openrouter": 0.6,
+   "max_jev_tokens": 750000
+  },
+  {
+   "suite": "slack",
+   "attack": "none",
+   "user_tasks": "all (21)",
+   "injection_tasks": "none",
+   "episodes": 42,
+   "max_usd_openrouter": 0.12,
+   "max_jev_tokens": 50000
+  },
+  {
+   "suite": "slack",
+   "attack": "important_instructions",
+   "user_tasks": "all (21)",
+   "injection_tasks": "all (5)",
+   "episodes": 210,
+   "max_usd_openrouter": 0.58,
+   "max_jev_tokens": 500000
+  },
+  {
+   "suite": "travel",
+   "attack": "none",
+   "user_tasks": "all (20)",
+   "injection_tasks": "none",
+   "episodes": 40,
+   "max_usd_openrouter": 0.25,
+   "max_jev_tokens": 80000
+  },
+  {
+   "suite": "travel",
+   "attack": "important_instructions",
+   "user_tasks": "all (20)",
+   "injection_tasks": "all (7)",
+   "episodes": 280,
+   "max_usd_openrouter": 1.45,
+   "max_jev_tokens": 970000
+  },
+  {
+   "suite": "workspace",
+   "attack": "none",
+   "user_tasks": "all (40)",
+   "injection_tasks": "none",
+   "episodes": 80,
+   "max_usd_openrouter": 0.5,
+   "max_jev_tokens": 350000
+  },
+  {
+   "suite": "workspace",
+   "attack": "important_instructions",
+   "user_tasks": "all (40)",
+   "injection_tasks": "all (14)",
+   "episodes": 1120,
+   "max_usd_openrouter": 5.0,
+   "max_jev_tokens": 4250000
+  }
+ ],
+ "episodes": {
+  "per_defense": 1046,
+  "no_attack_per_defense": 97,
+  "attacked_per_defense": 949,
+  "total": 2092
+ }
+}

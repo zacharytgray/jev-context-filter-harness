@@ -1,0 +1,4 @@
+# relevance filter: only the parts of a long output that answer the agent's question, then the cap
+[filters]
+relevance = true
+injection = false

@@ -1,0 +1,22 @@
+# authors are anonymous while the paper is under double-blind review. this file will be updated after review.
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the paper below."
+title: "jev-context-filter-harness"
+type: software
+authors:
+  - name: "Anonymous"
+license: MIT
+keywords:
+  - LLM agents
+  - prompt injection
+  - tool output
+  - context management
+  - token efficiency
+  - AgentDojo
+preferred-citation:
+  type: article
+  title: "System One Tool-Output Screening for LLM Agents for Safe and Efficient Outcomes"
+  authors:
+    - name: "Anonymous"
+  year: 2027
+  notes: "Under review"

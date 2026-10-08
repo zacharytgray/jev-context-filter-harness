@@ -1,0 +1,4 @@
+# relevance + injection: relevance, then injection, then the cap
+[filters]
+relevance = true
+injection = true

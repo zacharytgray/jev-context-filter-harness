@@ -1,0 +1,22 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# unpacked by scripts/unpack_data.py
+data/tasks/
+experiments/main/tasks/
+experiments/runs-*/*/*/*/
+experiments/runs-agentdojo-*/
+experiments/attack_wordings/items.jsonl
+experiments/attack_wordings/run/*
+!experiments/attack_wordings/run/report.json
+# built
+experiments/main/analysis/out-*/
+experiments/main/cross_model/out.json
+experiments/main/cross_model/per_task.csv
+experiments/main/cost_ratio.csv
+experiments/main/out/
+# s1h's default --runs-dir
+runs/
+.DS_Store

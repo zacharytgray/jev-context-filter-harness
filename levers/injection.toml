@@ -1,0 +1,4 @@
+# injection filter: planted instructions hidden, line by line, with the line finder, then the cap
+[filters]
+relevance = false
+injection = true

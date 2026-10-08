@@ -1,0 +1,17 @@
+# the full run: 25 tasks per test bed, each clean and planted, the same 150 task versions in every configuration.
+# four configurations: plain, relevance, injection, and relevance + injection.
+# every configuration has the 50,000-char cap on read and bash output. tasks/ holds links to the task dirs under
+# data/tasks ($S1H_BENCH_DATA, made by scripts/unpack_data.py); it is gitignored. tasks.json freezes the draw and the
+# list with a sha256 per task dir.
+
+[arms.plain]
+levers = "levers/plain.toml"
+
+[arms.relevance]
+levers = "levers/relevance.toml"
+
+[arms.injection]
+levers = "levers/injection.toml"
+
+[arms.relevance-injection]
+levers = "levers/relevance-injection.toml"

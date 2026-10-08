@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__RUN_TITLE__</title>
+<style>
+:root {
+  --bg: #f5f6f8; --panel: #ffffff; --ink: #1b1f24; --muted: #5f6873; --faint: #8a929c;
+  --line: #e2e5e9; --soft: #f0f2f5; --code: #f6f7f9;
+  --llm: #3b5bdb; --llm-soft: #eef1fe; --jev: #0c8a7d; --jev-soft: #e5f5f2;
+  --bad: #c02646; --bad-soft: #fdecef; --good: #1a7f45; --good-soft: #e8f6ee; --warn: #b45309; --warn-soft: #fff4e5;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1014; --panel: #161a20; --ink: #e5e8ec; --muted: #a0a8b2; --faint: #737c87;
+    --line: #272c34; --soft: #1d2128; --code: #11141a;
+    --llm: #8fa3ff; --llm-soft: #1b2140; --jev: #3dd6c3; --jev-soft: #0f2c29;
+    --bad: #ff7a93; --bad-soft: #36161e; --good: #5ad28e; --good-soft: #12301f; --warn: #f5a524; --warn-soft: #2f2210;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1014; --panel: #161a20; --ink: #e5e8ec; --muted: #a0a8b2; --faint: #737c87;
+  --line: #272c34; --soft: #1d2128; --code: #11141a;
+  --llm: #8fa3ff; --llm-soft: #1b2140; --jev: #3dd6c3; --jev-soft: #0f2c29;
+  --bad: #ff7a93; --bad-soft: #36161e; --good: #5ad28e; --good-soft: #12301f; --warn: #f5a524; --warn-soft: #2f2210;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+code, pre, .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+button { font: inherit; color: inherit; }
+.top {
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 12px; padding: 10px 16px;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.brand { font-weight: 650; }
+.spacer { flex: 1; }
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 3px 10px; cursor: pointer; font-size: 13px; }
+main { max-width: 1100px; margin: 0 auto; padding: 16px 16px 80px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 0 0 12px; min-width: 0; }
+.card.turn { border-left: 3px solid var(--llm); }
+.card.call { margin: 10px 0 0 0; background: var(--soft); }
+.card.err { border-color: var(--bad); background: var(--bad-soft); }
+h2 { font-size: 16px; margin: 0 0 8px; }
+h3 { font-size: 13px; margin: 10px 0 4px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.meta { color: var(--muted); font-size: 13px; }
+.chip { display: inline-block; font-size: 12px; padding: 1px 8px; border-radius: 99px; background: var(--soft); border: 1px solid var(--line); margin: 0 4px 4px 0; }
+.chip.on { background: var(--jev-soft); color: var(--jev); border-color: var(--jev); }
+.chip.bad { background: var(--bad-soft); color: var(--bad); border-color: var(--bad); }
+.chip.good { background: var(--good-soft); color: var(--good); border-color: var(--good); }
+.chip.warn { background: var(--warn-soft); color: var(--warn); border-color: var(--warn); }
+pre.code {
+  background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 4px 0;
+  font-size: 12.5px; line-height: 1.45; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 480px; overflow: auto;
+}
+details > summary { cursor: pointer; color: var(--muted); font-size: 13px; margin: 4px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin: 8px 0; }
+.stat { background: var(--soft); border-radius: 8px; padding: 6px 10px; }
+.stat .n { font-weight: 650; font-variant-numeric: tabular-nums; }
+.stat .l { color: var(--muted); font-size: 12px; }
+.sizes { font-size: 13px; font-variant-numeric: tabular-nums; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 3px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+.scroll { overflow-x: auto; }
+.flag { color: var(--bad); font-weight: 600; }
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="brand">s1h run</span>
+  <span class="meta mono" id="runid"></span>
+  <span class="spacer"></span>
+  <button class="btn" id="theme" type="button">theme</button>
+</header>
+<main id="main"></main>
+<script type="application/json" id="run-data">__RUN_DATA__</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("run-data").textContent);
+const RES = D.result || {}, LEV = D.levers || {}, TX = D.transcript || [], TR = D.trace || [];
+const TURNS = (D.llm || []).filter(r => r.kind === "turn");
+const COMPS = TR.filter(r => r.event === "compaction");
+
+function el(tag, props, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") e.className = v; else e.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null && k !== false) e.append(k instanceof Node ? k : String(k));
+  return e;
+}
+const fmt = n => n == null ? "-" : Number(n).toLocaleString("en-US");
+const pre = (text, cls) => el("pre", { class: "code " + (cls || "") }, text);
+const pretty = o => JSON.stringify(o, null, 2);
+function fold(summary, body, open) { return el("details", { open: open || null }, el("summary", null, summary), body); }
+function chip(text, cls) { return el("span", { class: "chip " + (cls || "") }, text); }
+function stat(n, l) { return el("div", { class: "stat" }, el("div", { class: "n" }, n), el("div", { class: "l" }, l)); }
+function args(raw) { try { return pretty(JSON.parse(raw || "{}")); } catch (e) { return String(raw); } }
+
+// trace rows of one tool call, by turn and call id
+const calls = new Map();
+function group(turn, id) {
+  const k = turn + "|" + id;
+  if (!calls.has(k)) calls.set(k, { out: null, chunks: [], requests: [], errors: [], fallbacks: [] });
+  return calls.get(k);
+}
+for (const r of TR) {
+  if (r.call_id == null) continue;
+  const g = group(r.turn, r.call_id);
+  if (r.kind === "request") g.requests.push(r);
+  else if (r.kind === "chunk") g.chunks.push(r);
+  else if (r.event === "output" || r.event === "result") g.out = r;
+  else if (r.event === "jev_error") g.errors.push(r);
+  else if (r.event === "jev_fallback") g.fallbacks.push(r);
+}
+
+function summary() {
+  const reqs = TR.filter(r => r.kind === "request");
+  const outs = TR.filter(r => r.event === "output" || r.event === "result");
+  const sum = (a, f) => a.reduce((s, r) => s + (f(r) || 0), 0);
+  const sw = ["relevance", "injection"].map(k => chip(k, LEV[k] ? "on" : "")).concat([chip(`cap ${fmt((LEV.constants || {}).cap_chars)}`, "on")]);
+  const end = RES.end || "no result";
+  const card = el("div", { class: "card" },
+    el("h2", null, "Run"),
+    el("div", null, chip("configuration: " + (LEV.name || "?")), ...sw),
+    el("div", null, chip("end: " + end, end === "delivered" ? "good" : end === "jev error" || end === "error" ? "bad" : "warn"),
+      chip("turns: " + fmt(RES.turns)), RES.rerun ? chip("rerun", "bad") : null,
+      D.record && D.record.score != null ? chip("score: " + D.record.score) : null),
+    RES.error ? pre(RES.error, "flag") : null,
+    el("h3", null, "Request"), pre(RES.request || ""),
+    el("h3", null, "Final message"), pre(RES.final_message || ""),
+    D.record && D.record.detail ? el("div", { class: "meta" }, "check: " + D.record.detail) : null,
+    el("div", { class: "grid" },
+      stat(fmt(TURNS.length), "llm calls"),
+      stat(fmt(sum(TURNS, r => r.prompt_tokens)), "prompt tokens"),
+      stat(fmt(sum(TURNS, r => r.completion_tokens)), "completion tokens"),
+      stat(fmt(Math.max(0, ...TURNS.map(r => r.prompt_tokens || 0))), "peak prompt"),
+      stat(fmt(COMPS.length), "compactions"),
+      stat(fmt(sum(COMPS, r => r.prompt_tokens)), "compaction prompt tokens"),
+      stat(fmt(reqs.length), "jev requests"),
+      stat(fmt(sum(reqs, r => (r.usage || {}).input_tokens)), "jev input tokens"),
+      stat(fmt(reqs.filter(r => r.error).length), "jev errors"),
+      stat(fmt(sum(reqs, r => (r.attempts || 1) - 1)), "jev retries"),
+      stat(fmt(TR.filter(r => r.event === "jev_fallback").length), "jev fallbacks"),
+      stat(fmt(sum(outs, r => r.raw_chars)), "tool output chars"),
+      stat(fmt(sum(outs, r => r.entered_chars)), "chars entered")),
+    fold("constants and tools", el("div", null,
+      pre(pretty(LEV.constants || {})), pre(pretty(D.tools || [])))),
+    TX.length && TX[0].role === "system" ? fold("system prompt", pre(TX[0].content)) : null);
+  return card;
+}
+
+function sizes(o) {
+  if (o.event === "result") return el("div", { class: "sizes" }, `${fmt(o.raw_chars)} chars` + (o.error ? " (error)" : ""));
+  const steps = [["raw", o.raw_chars], ["relevance", o.after_relevance], ["injection", o.after_injection],
+                 ["cap", o.after_cap], ["entered", o.entered_chars]];
+  const row = el("div", { class: "sizes" }, steps.map(([k, v], i) => (i ? " → " : "") + `${k} ${fmt(v)}`).join(""), " chars");
+  const tags = el("div", null,
+    o.ok === false ? chip("tool error", "bad") : null,
+    o.pass_through ? chip("4,000 or less") : null,
+    o.cap ? chip(`cap at line ${o.cap.last_line} of ${o.cap.total}`, "warn") : null,
+    chip(`${fmt(o.raw_lines)} lines`), chip(`tool ${fmt(o.tool_ms)} ms`),
+    o.jev_requests ? chip(`jev ${fmt(o.jev_requests)} requests, ${fmt(o.jev_input_tokens)} tokens, ${fmt(o.jev_ms)} ms`, "on") : null);
+  const shown = (o.shown || []).map(([a, b]) => a === b ? `${a}` : `${a}-${b}`).join(", ");
+  const hidden = (o.hidden || []).map(h => `${h.first}-${h.last} (${h.reason})`).join(", ");
+  return el("div", null, row, tags,
+    el("div", { class: "meta" }, "shown: " + (shown || "none")),
+    hidden ? el("div", { class: "meta" }, "hidden: " + hidden) : null);
+}
+
+// hidden is a list of ranges since the injection loop, one range before it
+function ranges(h) {
+  if (!h || !h.length) return "";
+  return (typeof h[0] === "number" ? [h] : h).map(x => x[0] === x[1] ? String(x[0]) : x.join("-")).join(", ");
+}
+
+// the injection loop: each round's p and what its finder hid, then how the chunk ended
+function rounds(r) {
+  if (!r.outcome) return "";
+  const each = r.rounds.map(x => `r${x.round} p${x.p == null ? "-" : x.p.toFixed(2)}` +
+    ("span" in x ? (x.span ? ` hid ${ranges(x.hidden)}` : ` ${x.reason || "no span"}, hid ${ranges(x.hidden)}`) : ""));
+  return each.join("; ") + `; ${r.outcome}, ${r.calls} calls`;
+}
+
+function chunkTable(rows) {
+  const head = el("tr", null, ["filter", "chunk", "lines", "chars", "p", "decision", "span", "hidden", "rounds"].map(h => el("th", null, h)));
+  const body = rows.map(r => el("tr", null,
+    el("td", null, r.filter), el("td", null, r.chunk), el("td", null, r.lines), el("td", null, fmt(r.chars)),
+    el("td", null, r.p == null ? "-" : r.p.toFixed(2)),
+    el("td", { class: r.decision === "flagged" ? "flag" : null }, r.decision),
+    el("td", null, r.decision === "flagged" ? (r.span ? r.span.join("-") : "none: " + r.reason) : ""),
+    el("td", null, ranges(r.hidden)),
+    el("td", { class: r.outcome === "stuck" ? "flag" : null }, rounds(r))));
+  return el("div", { class: "scroll" }, el("table", null, head, body));
+}
+
+function request(r) {
+  const u = r.usage || {};
+  const title = `#${r.request_id} ${r.filter}, chunks ${JSON.stringify(r.chunks)}, ${fmt(r.latency_ms)} ms, ` +
+    `${fmt(u.input_tokens)} tokens` + ((r.attempts || 1) > 1 ? `, ${r.attempts} attempts` : "") + (r.error ? ", error" : "");
+  return fold(title, el("div", null,
+    (r.errors || []).length ? pre(r.errors.join("\n"), "flag") : r.error ? pre(r.error, "flag") : null,
+    el("h3", null, "questions"), pre(pretty((r.body || {}).questions)),
+    el("h3", null, "state"), pre(pretty((r.body || {}).state)),
+    el("h3", null, "answers"), pre(pretty(r.answers))));
+}
+
+function callCard(turn, call, toolMsg) {
+  const f = call.function || {};
+  const g = calls.get(turn + "|" + call.id) || { out: null, chunks: [], requests: [], errors: [], fallbacks: [] };
+  const content = toolMsg ? String(toolMsg.content) : null;
+  return el("div", { class: "card call" + (g.errors.length ? " err" : "") },
+    el("div", null, el("strong", null, f.name || "?"), " ", el("span", { class: "meta mono" }, call.id)),
+    pre(args(f.arguments)),
+    g.out ? sizes(g.out) : null,
+    g.errors.map(e => pre(`jev error (${e.filter}): ${e.error}`, "flag")),
+    g.fallbacks.map(e => pre(`jev fallback (${e.filter}, chunks ${JSON.stringify(e.chunks)}, ${e.attempts} attempts): ${e.error}`, "flag")),
+    content != null ? fold(`tool message, ${fmt(content.length)} chars`, pre(content), content.length < 2000) :
+      el("div", { class: "meta" }, "no tool message"),
+    g.chunks.length ? fold(`${g.chunks.length} chunk rows`, chunkTable(g.chunks),
+                           g.chunks.some(r => r.decision === "flagged")) : null,
+    g.requests.length ? fold(`${g.requests.length} jev requests`, el("div", null, g.requests.map(request))) : null);
+}
+
+function compactionCard(c) {
+  const note = TX[c.at] || {};
+  return el("div", { class: "card" },
+    el("h2", null, `Compaction before turn ${c.turn}`),
+    el("div", null, chip(c.trigger === "rejected" ? "the provider rejected the call" :
+                         c.trigger === "exact" ? "the last prompt passed the budget" : "estimate over the budget", "warn"),
+      // older runs recorded an estimate
+      c.trigger_prompt_tokens != null ? chip(`last prompt ${fmt(c.trigger_prompt_tokens)} tokens`) :
+        c.estimate != null ? chip(`estimate ${fmt(c.estimate)} tokens`) : null, chip(`${fmt(c.kept)} newest message${c.kept === 1 ? "" : "s"} kept`),
+      c.dropped ? chip(`${fmt(c.dropped)} oldest exchange${c.dropped === 1 ? "" : "s"} dropped from the summary input`, "warn") : null,
+      chip(`${fmt(c.prompt_tokens)} prompt, ${fmt(c.completion_tokens)} completion tokens`)),
+    el("div", { class: "sizes" }, `transcript ${fmt(c.transcript_chars_before)} → ${fmt(c.after)} chars`),
+    // the request comes first in that message, the summary after it
+    fold(`summary, ${fmt(c.summary_chars)} chars`,
+      pre(String(note.content || "").slice(String((TX[1] || {}).content || "").length).replace(/^\n\n/, "")), true));
+}
+
+function turns() {
+  const out = [];
+  let k = 0;
+  for (let i = 0; i < TX.length; i++) {
+    const m = TX[i];
+    if (m.role !== "assistant") continue;
+    k += 1;
+    const llm = TURNS[k - 1] || {};
+    for (const c of COMPS.filter(c => c.turn === k)) out.push(compactionCard(c));
+    const replies = new Map();
+    for (let j = i + 1; j < TX.length && TX[j].role === "tool"; j++) replies.set(TX[j].tool_call_id, TX[j]);
+    out.push(el("div", { class: "card turn", id: "turn-" + k },
+      el("h2", null, `Turn ${k}`),
+      el("div", { class: "meta" }, `prompt ${fmt(llm.prompt_tokens)} tokens, completion ${fmt(llm.completion_tokens)}, ` +
+        `${fmt(llm.latency_ms)} ms` + (llm.finish_reason ? `, ${llm.finish_reason}` : "")),
+      m.content ? pre(m.content) : null,
+      llm.reasoning ? fold("reasoning", pre(llm.reasoning)) : null,
+      (m.tool_calls || []).map(c => callCard(k, c, replies.get(c.id)))));
+  }
+  for (const c of COMPS.filter(c => c.turn > k)) out.push(compactionCard(c));  // a turn that never answered
+  const endRow = TR.find(r => r.event === "end");
+  if (endRow) out.push(el("div", { class: "card" + (RES.rerun ? " err" : "") }, `end: ${endRow.end}`,
+    endRow.error ? pre(endRow.error) : null));
+  return out;
+}
+
+function applyTheme(t) {
+  if (t) document.documentElement.setAttribute("data-theme", t); else document.documentElement.removeAttribute("data-theme");
+}
+let theme = null;
+try { theme = localStorage.getItem("s1h-theme"); } catch (e) { theme = null; }
+applyTheme(theme);
+document.getElementById("theme").addEventListener("click", () => {
+  theme = theme === "dark" ? "light" : theme === "light" ? null : "dark";
+  applyTheme(theme);
+  try { if (theme) localStorage.setItem("s1h-theme", theme); else localStorage.removeItem("s1h-theme"); } catch (e) {}
+});
+document.getElementById("runid").textContent = D.id || "";
+document.getElementById("main").append(summary(), ...turns());
+</script>
+</body>
+</html>

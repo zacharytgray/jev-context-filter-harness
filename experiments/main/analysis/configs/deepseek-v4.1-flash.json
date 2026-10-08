@@ -1,0 +1,18 @@
+{
+ "model": {
+  "name": "DeepSeek V4.1 Flash"
+ },
+ "runs": {
+  "root": null,
+  "manifest": "experiments/main/manifest_deepseek-v4.1-flash-32k.json",
+  "b16k_manifest": "experiments/main/manifest_deepseek-v4.1-flash-16k.json",
+  "tag": "deepseek-v4.1-flash-32k",
+  "b16k_tag": "deepseek-v4.1-flash-16k"
+ },
+ "expected": {
+  "total": 600,
+  "per_configuration": 150,
+  "played": 600,
+  "reused": 0
+ }
+}

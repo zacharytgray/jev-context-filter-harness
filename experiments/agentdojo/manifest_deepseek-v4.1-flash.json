@@ -1,0 +1,88 @@
+{
+ "schema_version": 1,
+ "block": "agentdojo-run-deepseek-v4.1-flash",
+ "stage": "AgentDojo with DeepSeek V4.1 Flash as the agent: the design of manifest.json and manifest_travel_yaml.json (Gemma 4 31B, travel with --tool-format yaml) with only the agent model changed. All four suites, the plain loop against the injection filter, every user task without attack (97) and every security case with important_instructions (949)",
+ "status": "frozen before any episode",
+ "date": "2026-10-04",
+ "runner": "experiments/agentdojo/run_agentdojo.py (AgentDojo package 0.1.35, clone 089ed468, benchmark v1.2.2)",
+ "model": "deepseek/deepseek-v4.1-flash",
+ "provider": "Morph only, no fallbacks",
+ "llm_config": "experiments/agentdojo/deepseek_llm_config.json",
+ "sampling": {
+  "temperature": 1.0,
+  "top_p": 0.95,
+  "max_tokens": 8192
+ },
+ "reasoning_effort": "low",
+ "settings_from": "manifest_deepseek-v4.1-flash-32k.json: model, Morph pin, temperature 1.0, top_p 0.95 (no top_k), reasoning effort low, max output 8,192. The reasoning is logged in llm_calls.jsonl (reasoning, reasoning_tokens) and never sent back: the runner builds each assistant message from the reply's text and tool calls only",
+ "pipeline_name": "openai-compatible_deepseek-v4.1-flash_<defense>. AgentDojo's model-name lookup matches only openai-compatible, so the attack says \"AI assistant\" and \"Emma Johnson\", as for Gemma (check_names runs before each attacked call)",
+ "jev_model": "jev-latest",
+ "attack": "important_instructions",
+ "defenses": {
+  "none": "the plain loop: AgentDojo's own pipeline (default system message, user task, the LLM, ToolsExecutionLoop of 15 rounds)",
+  "jev": "the injection filter as in manifest.json, unchanged"
+ },
+ "deviations_from_stock_agentdojo": "as in manifest.json: the sampling above and reasoning effort low; the OpenRouter provider pin; travel with --tool-format yaml, the other suites AgentDojo's str formatter; the ArgCheckExecutor; fresh ids for empty or repeated tool-call ids",
+ "workers": 8,
+ "calls": [
+  {
+   "suite": "banking",
+   "attack": "none",
+   "episodes": 32
+  },
+  {
+   "suite": "banking",
+   "attack": "important_instructions",
+   "episodes": 288
+  },
+  {
+   "suite": "slack",
+   "attack": "none",
+   "episodes": 42
+  },
+  {
+   "suite": "slack",
+   "attack": "important_instructions",
+   "episodes": 210
+  },
+  {
+   "suite": "travel",
+   "attack": "none",
+   "episodes": 40,
+   "extra_args": [
+    "--tool-format",
+    "yaml"
+   ],
+   "out": "travel-yaml"
+  },
+  {
+   "suite": "travel",
+   "attack": "important_instructions",
+   "episodes": 280,
+   "extra_args": [
+    "--tool-format",
+    "yaml"
+   ],
+   "out": "travel-yaml"
+  },
+  {
+   "suite": "workspace",
+   "attack": "none",
+   "episodes": 80
+  },
+  {
+   "suite": "workspace",
+   "attack": "important_instructions",
+   "episodes": 1120
+  }
+ ],
+ "every_call": "--user-tasks all --defense none,jev --workers 8 --llm-config deepseek_llm_config.json --max-usd-openrouter 5.9 --max-jev-tokens 20400000 --env-file .env",
+ "episodes": {
+  "per_defense": 1046,
+  "no_attack_per_defense": 97,
+  "attacked_per_defense": 949,
+  "total": 2092
+ },
+ "replay_rule": "an episode whose last record is an error (a provider error above all: an http error after the client's 6 retries, a reply with no choices, a finish_reason of error or none) is never a result: utility and security are null, end_state says provider error or error, and every rate leaves it out. After the eight calls the same calls run again up to 3 times with --retry-errors, so each failed episode is played again up to 3 times and the last play stands. One that fails every time is reported as a failure, not scored. A reply the provider finished normally with no text and no tool call is the model's (empty_replies counts it). A Jev-error episode is always played again. A filter episode played while Jev answered 401, 402 or 403 ran unfiltered (fallback open): it is set aside and played again, never counted",
+ "out": "experiments/runs-agentdojo-deepseek-v4.1-flash/<suite>"
+}

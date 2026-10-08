@@ -1,0 +1,22 @@
+% the paper's Table 3. needs \usepackage{booktabs,array}; citation keys are in references.bib
+\begin{table}[t]
+\caption{AgentDojo: our runs next to published defenses, in percent, no defense $\to$ with defense. Benign utility is without attack, attacked utility under attack. n/r: not reported. $^\dagger$Computed from reported counts, 44 and 0 of 949.}
+\label{tab:agentdojo}
+\footnotesize\setlength{\tabcolsep}{2.4pt}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.8in}>{\raggedright\arraybackslash}p{0.6in}lll@{}}
+\toprule
+Defense & Agent & Benign & Attacked & Attack \\
+ & & utility & utility & success \\
+\midrule
+This work & Gemma 4 31B & 94.8 $\to$ 92.8 & 80.5 $\to$ 91.6 & 27.3 $\to$ 0.1 \\
+This work & DeepSeek V4.1 Flash & 91.8 $\to$ 95.9 & 92.4 $\to$ 91.5 & 1.7 $\to$ 0.0 \\
+AgentSentry~\cite{zhang2026agentsentry} & GPT-4o & 78.35 $\to$ 78.35 & 36.84 $\to$ 75.49 & 33.23 $\to$ 0.00 \\
+AgentSentry~\cite{zhang2026agentsentry} & Qwen3-Max & 85.57 $\to$ 83.51 & 56.24 $\to$ 86.92 & 33.38 $\to$ 0.00 \\
+DataFilter~\cite{wang2026datafilter} & GPT-4o & 81.4 $\to$ 79.4 & 46.7 $\to$ 72.5 & 42.2 $\to$ 0.2 \\
+PromptArmor~\cite{shi2025promptarmor} & GPT-4.1 & n/r & 64.27 $\to$ 72.02 & 54.53 $\to$ 0.00 \\
+\quad repr.\ in~\cite{wang2026datafilter} & GPT-4o & 81.4 $\to$ 72.2 & 46.7 $\to$ 67.1 & 42.2 $\to$ 2.5 \\
+CommandSans*~\cite{das2025commandsans} & GPT-4o & 69.07 $\to$ 77.32 & 46.89 $\to$ 63.75 & 34.67 $\to$ 3.48 \\
+CaMeL~\cite{debenedetti2025camel} & Claude 3.5 Sonnet & 90.72 $\to$ 63.92 & 86.83 $\to$ 66.70 & 4.6$^\dagger$ $\to$ 0 \\
+\bottomrule
+\end{tabular}
+\end{table}

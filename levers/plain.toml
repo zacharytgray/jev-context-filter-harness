@@ -1,0 +1,4 @@
+# plain loop: the agent with no filter. the 50,000-char cap is in every configuration
+[filters]
+relevance = false
+injection = false

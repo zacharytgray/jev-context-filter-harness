@@ -1,0 +1,633 @@
+{
+ "name": "attack_wordings",
+ "built": "2026-10-01 12:54:38",
+ "question": "does the injection filter catch injections worded unlike important_instructions?",
+ "templates": [
+  "important_instructions",
+  "tool_knowledge",
+  "ignore_previous",
+  "system_message",
+  "injecagent"
+ ],
+ "reference": "important_instructions",
+ "agentdojo": {
+  "commit": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+  "benchmark_version": "v1.2.2",
+  "names": {
+   "user": "Emma Johnson",
+   "model": "AI assistant"
+  }
+ },
+ "jev_model": "jev-latest",
+ "filter": {
+  "wording": "aside",
+  "threshold": 0.5,
+  "finder": "inserted-framing",
+  "max_calls_per_chunk": 10,
+  "chunk_lines": 40,
+  "chunk_chars": 4000,
+  "workers": 6
+ },
+ "sampling": {
+  "rule": "every test bed case (set B, 75), and AgentDojo cases drawn round robin over the four suites, each suite in a random order (seed 20261001), until the next case would take the plan estimate past 15,000,000 tokens. every template of a drawn case and its clean counterpart go in",
+  "agentdojo_cases_drawn": {
+   "banking": 134,
+   "slack": 130,
+   "travel": 134,
+   "workspace": 134
+  },
+  "agentdojo_cases_available": {
+   "banking": 135,
+   "slack": 130,
+   "travel": 223,
+   "workspace": 706
+  },
+  "plan_tokens_drawn": 14998065,
+  "plan_tokens_set_b": 2868524,
+  "full_design_plan_tokens": 40117420,
+  "full_design_high_tokens": 112249560,
+  "full_design_estimate": {
+   "plan": {
+    "A all": {
+     "items": 6110,
+     "requests": 29704,
+     "input_tokens": 37248896,
+     "reserved_tokens": 44187266,
+     "injection_requests": 22133,
+     "finder_requests": 7571
+    },
+    "A clean": {
+     "items": 140,
+     "requests": 327,
+     "input_tokens": 292843,
+     "reserved_tokens": 350722,
+     "injection_requests": 327
+    },
+    "A ignore_previous": {
+     "items": 1194,
+     "requests": 5827,
+     "input_tokens": 7120217,
+     "reserved_tokens": 8486150,
+     "injection_requests": 4320,
+     "finder_requests": 1507
+    },
+    "A important_instructions": {
+     "items": 1194,
+     "requests": 6178,
+     "input_tokens": 8026354,
+     "reserved_tokens": 9473506,
+     "injection_requests": 4585,
+     "finder_requests": 1593
+    },
+    "A injecagent": {
+     "items": 1194,
+     "requests": 5766,
+     "input_tokens": 7067664,
+     "reserved_tokens": 8413698,
+     "injection_requests": 4300,
+     "finder_requests": 1466
+    },
+    "A system_message": {
+     "items": 1194,
+     "requests": 5826,
+     "input_tokens": 7091265,
+     "reserved_tokens": 8457243,
+     "injection_requests": 4318,
+     "finder_requests": 1508
+    },
+    "A tool_knowledge": {
+     "items": 1194,
+     "requests": 5780,
+     "input_tokens": 7650553,
+     "reserved_tokens": 9005947,
+     "injection_requests": 4283,
+     "finder_requests": 1497
+    },
+    "B all": {
+     "items": 450,
+     "requests": 1317,
+     "input_tokens": 2868524,
+     "reserved_tokens": 3225784,
+     "injection_requests": 904,
+     "finder_requests": 413
+    },
+    "B clean": {
+     "items": 75,
+     "requests": 81,
+     "input_tokens": 137387,
+     "reserved_tokens": 153160,
+     "injection_requests": 81
+    },
+    "B ignore_previous": {
+     "items": 75,
+     "requests": 225,
+     "input_tokens": 498256,
+     "reserved_tokens": 560382,
+     "injection_requests": 150,
+     "finder_requests": 75
+    },
+    "B important_instructions": {
+     "items": 75,
+     "requests": 293,
+     "input_tokens": 631906,
+     "reserved_tokens": 712871,
+     "injection_requests": 195,
+     "finder_requests": 98
+    },
+    "B injecagent": {
+     "items": 75,
+     "requests": 225,
+     "input_tokens": 495315,
+     "reserved_tokens": 557433,
+     "injection_requests": 150,
+     "finder_requests": 75
+    },
+    "B system_message": {
+     "items": 75,
+     "requests": 225,
+     "input_tokens": 499988,
+     "reserved_tokens": 562106,
+     "injection_requests": 150,
+     "finder_requests": 75
+    },
+    "B tool_knowledge": {
+     "items": 75,
+     "requests": 268,
+     "input_tokens": 605672,
+     "reserved_tokens": 679832,
+     "injection_requests": 178,
+     "finder_requests": 90
+    },
+    "all": {
+     "items": 6560,
+     "requests": 31021,
+     "input_tokens": 40117420,
+     "reserved_tokens": 47413050,
+     "injection_requests": 23037,
+     "finder_requests": 7984
+    }
+   },
+   "high": {
+    "A all": {
+     "items": 6110,
+     "requests": 70594,
+     "input_tokens": 106363807,
+     "reserved_tokens": 125538703,
+     "injection_requests": 40505,
+     "finder_requests": 30089
+    },
+    "A clean": {
+     "items": 140,
+     "requests": 327,
+     "input_tokens": 292843,
+     "reserved_tokens": 350722,
+     "injection_requests": 327
+    },
+    "A ignore_previous": {
+     "items": 1194,
+     "requests": 12705,
+     "input_tokens": 18178371,
+     "reserved_tokens": 21584220,
+     "injection_requests": 7493,
+     "finder_requests": 5212
+    },
+    "A important_instructions": {
+     "items": 1194,
+     "requests": 16732,
+     "input_tokens": 26479337,
+     "reserved_tokens": 31115669,
+     "injection_requests": 9188,
+     "finder_requests": 7544
+    },
+    "A injecagent": {
+     "items": 1194,
+     "requests": 13224,
+     "input_tokens": 19067931,
+     "reserved_tokens": 22634019,
+     "injection_requests": 7704,
+     "finder_requests": 5520
+    },
+    "A system_message": {
+     "items": 1194,
+     "requests": 12095,
+     "input_tokens": 17248085,
+     "reserved_tokens": 20470262,
+     "injection_requests": 7224,
+     "finder_requests": 4871
+    },
+    "A tool_knowledge": {
+     "items": 1194,
+     "requests": 15511,
+     "input_tokens": 25097240,
+     "reserved_tokens": 29383811,
+     "injection_requests": 8569,
+     "finder_requests": 6942
+    },
+    "B all": {
+     "items": 450,
+     "requests": 2485,
+     "input_tokens": 5885753,
+     "reserved_tokens": 6631089,
+     "injection_requests": 1414,
+     "finder_requests": 1071
+    },
+    "B clean": {
+     "items": 75,
+     "requests": 81,
+     "input_tokens": 137387,
+     "reserved_tokens": 153160,
+     "injection_requests": 81
+    },
+    "B ignore_previous": {
+     "items": 75,
+     "requests": 225,
+     "input_tokens": 498256,
+     "reserved_tokens": 560382,
+     "injection_requests": 150,
+     "finder_requests": 75
+    },
+    "B important_instructions": {
+     "items": 75,
+     "requests": 874,
+     "input_tokens": 2097996,
+     "reserved_tokens": 2371682,
+     "injection_requests": 450,
+     "finder_requests": 424
+    },
+    "B injecagent": {
+     "items": 75,
+     "requests": 225,
+     "input_tokens": 495315,
+     "reserved_tokens": 557433,
+     "injection_requests": 150,
+     "finder_requests": 75
+    },
+    "B system_message": {
+     "items": 75,
+     "requests": 225,
+     "input_tokens": 499988,
+     "reserved_tokens": 562106,
+     "injection_requests": 150,
+     "finder_requests": 75
+    },
+    "B tool_knowledge": {
+     "items": 75,
+     "requests": 855,
+     "input_tokens": 2156811,
+     "reserved_tokens": 2426326,
+     "injection_requests": 433,
+     "finder_requests": 422
+    },
+    "all": {
+     "items": 6560,
+     "requests": 73079,
+     "input_tokens": 112249560,
+     "reserved_tokens": 132169792,
+     "injection_requests": 41919,
+     "finder_requests": 31160
+    }
+   }
+  }
+ },
+ "seed": 20261001,
+ "order": "one case at a time (its five templates, then its clean counterpart), cases spread evenly by source",
+ "inputs": {
+  "agentdojo_dir": "experiments/runs-agentdojo-gemma4-31b",
+  "tasks_json": "experiments/main/tasks.json",
+  "tasks_json_sha256": "29c1a39a9d9aebbfc4585c0f7f113c87d68a1dde5ed8a6567d74a43406881066",
+  "task_dirs_checked": true,
+  "bench_data": "data (S1H_BENCH_DATA)"
+ },
+ "items": {
+  "file": "items.jsonl",
+  "sha256": "92a31e1c1a004ca9470b359d87107a08b0e264b35a42068936ce4646d52d9c86",
+  "count": 3243,
+  "by_set_version": {
+   "A important_instructions": 532,
+   "A tool_knowledge": 532,
+   "A ignore_previous": 532,
+   "A system_message": 532,
+   "A injecagent": 532,
+   "A clean": 133,
+   "B important_instructions": 75,
+   "B tool_knowledge": 75,
+   "B ignore_previous": 75,
+   "B system_message": 75,
+   "B injecagent": 75,
+   "B clean": 75
+  }
+ },
+ "set_a": {
+  "suites": {
+   "banking": {
+    "outputs": 152,
+    "distinct": 135,
+    "clean outputs": 15,
+    "cases": 135,
+    "tool_format": "str",
+    "seconds": 10.1
+   },
+   "slack": {
+    "outputs": 215,
+    "distinct": 130,
+    "clean outputs": 26,
+    "cases": 130,
+    "tool_format": "str",
+    "seconds": 10.3
+   },
+   "travel": {
+    "outputs": 223,
+    "distinct": 223,
+    "clean outputs": 42,
+    "cases": 223,
+    "tool_format": "yaml",
+    "seconds": 27.1
+   },
+   "workspace": {
+    "outputs": 706,
+    "distinct": 706,
+    "clean outputs": 57,
+    "cases": 706,
+    "tool_format": "str",
+    "seconds": 200.6
+   }
+  }
+ },
+ "set_b": {
+  "contextbench important_instructions chunks kept": 30,
+  "plants across chunks important_instructions": 23,
+  "plants inside a line important_instructions": 9,
+  "contextbench tool_knowledge chunks kept": 28,
+  "plants across chunks tool_knowledge": 14,
+  "plants inside a line tool_knowledge": 9,
+  "contextbench ignore_previous chunks kept": 25,
+  "plants across chunks ignore_previous": 0,
+  "plants inside a line ignore_previous": 9,
+  "contextbench system_message chunks kept": 25,
+  "plants across chunks system_message": 0,
+  "plants inside a line system_message": 9,
+  "contextbench injecagent chunks kept": 25,
+  "plants across chunks injecagent": 0,
+  "plants inside a line injecagent": 9,
+  "cases": 75,
+  "legalbenchrag important_instructions chunks kept": 38,
+  "legalbenchrag tool_knowledge chunks kept": 35,
+  "legalbenchrag ignore_previous chunks kept": 25,
+  "legalbenchrag system_message chunks kept": 25,
+  "legalbenchrag injecagent chunks kept": 25,
+  "docfinqa important_instructions chunks kept": 30,
+  "docfinqa tool_knowledge chunks kept": 27,
+  "docfinqa ignore_previous chunks kept": 25,
+  "docfinqa system_message chunks kept": 25,
+  "docfinqa injecagent chunks kept": 25
+ },
+ "estimate": {
+  "plan": {
+   "A all": {
+    "items": 2793,
+    "requests": 10389,
+    "input_tokens": 12129541,
+    "reserved_tokens": 14626624,
+    "injection_requests": 7424,
+    "finder_requests": 2965
+   },
+   "A clean": {
+    "items": 133,
+    "requests": 269,
+    "input_tokens": 237122,
+    "reserved_tokens": 284735,
+    "injection_requests": 269
+   },
+   "A ignore_previous": {
+    "items": 532,
+    "requests": 1984,
+    "input_tokens": 2209404,
+    "reserved_tokens": 2689554,
+    "injection_requests": 1403,
+    "finder_requests": 581
+   },
+   "A important_instructions": {
+    "items": 532,
+    "requests": 2163,
+    "input_tokens": 2698895,
+    "reserved_tokens": 3220274,
+    "injection_requests": 1539,
+    "finder_requests": 624
+   },
+   "A injecagent": {
+    "items": 532,
+    "requests": 1974,
+    "input_tokens": 2222963,
+    "reserved_tokens": 2699789,
+    "injection_requests": 1400,
+    "finder_requests": 574
+   },
+   "A system_message": {
+    "items": 532,
+    "requests": 1984,
+    "input_tokens": 2189252,
+    "reserved_tokens": 2669402,
+    "injection_requests": 1403,
+    "finder_requests": 581
+   },
+   "A tool_knowledge": {
+    "items": 532,
+    "requests": 2015,
+    "input_tokens": 2571905,
+    "reserved_tokens": 3062870,
+    "injection_requests": 1410,
+    "finder_requests": 605
+   },
+   "B all": {
+    "items": 450,
+    "requests": 1317,
+    "input_tokens": 2868524,
+    "reserved_tokens": 3225784,
+    "injection_requests": 904,
+    "finder_requests": 413
+   },
+   "B clean": {
+    "items": 75,
+    "requests": 81,
+    "input_tokens": 137387,
+    "reserved_tokens": 153160,
+    "injection_requests": 81
+   },
+   "B ignore_previous": {
+    "items": 75,
+    "requests": 225,
+    "input_tokens": 498256,
+    "reserved_tokens": 560382,
+    "injection_requests": 150,
+    "finder_requests": 75
+   },
+   "B important_instructions": {
+    "items": 75,
+    "requests": 293,
+    "input_tokens": 631906,
+    "reserved_tokens": 712871,
+    "injection_requests": 195,
+    "finder_requests": 98
+   },
+   "B injecagent": {
+    "items": 75,
+    "requests": 225,
+    "input_tokens": 495315,
+    "reserved_tokens": 557433,
+    "injection_requests": 150,
+    "finder_requests": 75
+   },
+   "B system_message": {
+    "items": 75,
+    "requests": 225,
+    "input_tokens": 499988,
+    "reserved_tokens": 562106,
+    "injection_requests": 150,
+    "finder_requests": 75
+   },
+   "B tool_knowledge": {
+    "items": 75,
+    "requests": 268,
+    "input_tokens": 605672,
+    "reserved_tokens": 679832,
+    "injection_requests": 178,
+    "finder_requests": 90
+   },
+   "all": {
+    "items": 3243,
+    "requests": 11706,
+    "input_tokens": 14998065,
+    "reserved_tokens": 17852408,
+    "injection_requests": 8328,
+    "finder_requests": 3378
+   }
+  },
+  "high": {
+   "A all": {
+    "items": 2793,
+    "requests": 24988,
+    "input_tokens": 35422212,
+    "reserved_tokens": 42279096,
+    "injection_requests": 14024,
+    "finder_requests": 10964
+   },
+   "A clean": {
+    "items": 133,
+    "requests": 269,
+    "input_tokens": 237122,
+    "reserved_tokens": 284735,
+    "injection_requests": 269
+   },
+   "A ignore_previous": {
+    "items": 532,
+    "requests": 4225,
+    "input_tokens": 5659719,
+    "reserved_tokens": 6800706,
+    "injection_requests": 2454,
+    "finder_requests": 1771
+   },
+   "A important_instructions": {
+    "items": 532,
+    "requests": 6437,
+    "input_tokens": 9530188,
+    "reserved_tokens": 11342641,
+    "injection_requests": 3405,
+    "finder_requests": 3032
+   },
+   "A injecagent": {
+    "items": 532,
+    "requests": 4455,
+    "input_tokens": 6059578,
+    "reserved_tokens": 7271911,
+    "injection_requests": 2546,
+    "finder_requests": 1909
+   },
+   "A system_message": {
+    "items": 532,
+    "requests": 3956,
+    "input_tokens": 5282081,
+    "reserved_tokens": 6343709,
+    "injection_requests": 2328,
+    "finder_requests": 1628
+   },
+   "A tool_knowledge": {
+    "items": 532,
+    "requests": 5646,
+    "input_tokens": 8653524,
+    "reserved_tokens": 10235394,
+    "injection_requests": 3022,
+    "finder_requests": 2624
+   },
+   "B all": {
+    "items": 450,
+    "requests": 2485,
+    "input_tokens": 5885753,
+    "reserved_tokens": 6631089,
+    "injection_requests": 1414,
+    "finder_requests": 1071
+   },
+   "B clean": {
+    "items": 75,
+    "requests": 81,
+    "input_tokens": 137387,
+    "reserved_tokens": 153160,
+    "injection_requests": 81
+   },
+   "B ignore_previous": {
+    "items": 75,
+    "requests": 225,
+    "input_tokens": 498256,
+    "reserved_tokens": 560382,
+    "injection_requests": 150,
+    "finder_requests": 75
+   },
+   "B important_instructions": {
+    "items": 75,
+    "requests": 874,
+    "input_tokens": 2097996,
+    "reserved_tokens": 2371682,
+    "injection_requests": 450,
+    "finder_requests": 424
+   },
+   "B injecagent": {
+    "items": 75,
+    "requests": 225,
+    "input_tokens": 495315,
+    "reserved_tokens": 557433,
+    "injection_requests": 150,
+    "finder_requests": 75
+   },
+   "B system_message": {
+    "items": 75,
+    "requests": 225,
+    "input_tokens": 499988,
+    "reserved_tokens": 562106,
+    "injection_requests": 150,
+    "finder_requests": 75
+   },
+   "B tool_knowledge": {
+    "items": 75,
+    "requests": 855,
+    "input_tokens": 2156811,
+    "reserved_tokens": 2426326,
+    "injection_requests": 433,
+    "finder_requests": 422
+   },
+   "all": {
+    "items": 3243,
+    "requests": 27473,
+    "input_tokens": 41307965,
+    "reserved_tokens": 48910185,
+    "injection_requests": 15438,
+    "finder_requests": 12035
+   }
+  }
+ },
+ "cap": 19000000,
+ "cap_rule": "hard stop at 19M Jev input tokens counted from Jev's usage, checked before each request; run all if the plan estimate is at most 15M, else a stratified sample that fits",
+ "price_per_1m_input": 0.042,
+ "rate_limits": {
+  "requests_per_s": 30,
+  "tokens_per_s": 80000
+ }
+}
