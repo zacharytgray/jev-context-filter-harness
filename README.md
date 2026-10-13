@@ -457,5 +457,6 @@ the attack text is inserted where the task's answer is. Versions, commits, and e
 ## License
 
 Code: MIT ([LICENSE](LICENSE)). Data we added (task specifications, gold answers, planted text, run records): CC BY
-4.0. Upstream content keeps its own license; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The full
+4.0, except Jev's scores in the run records, which may not be used for model distillation or to train a model that
+imitates Jev. Upstream content keeps its own license; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The full
 license texts are in [LICENSES/](LICENSES/).

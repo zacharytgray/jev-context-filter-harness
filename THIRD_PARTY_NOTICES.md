@@ -12,6 +12,9 @@ license texts are in `LICENSES/`, and `LICENSES/README.md` says where each text 
   scorers read (`gold.json`), the planted text, `tasks.json`, the manifests, and the run records (records, transcripts,
   traces, LLM and Jev logs, AgentDojo episode logs): CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/, full
   text in `LICENSES/CC-BY-4.0.txt`).
+- **Jev's outputs** in the run records (its scores, probabilities and request ids, in the traces and Jev logs) are
+  not covered by CC BY 4.0. They are here to document and reproduce this study. They may not be used for model
+  distillation, to train a model that imitates Jev, or to build a similar or competing model.
 - Upstream content inside these files (repository code, contract text, filings, benchmark questions and gold spans,
   AgentDojo environment data) keeps its upstream license, listed below.
 
@@ -121,7 +124,7 @@ Conditions that apply to the redistributed checkouts:
 ## Models and services
 
 - Jev is TypeSafe's hosted model (https://docs.typesafe.ai). It is not redistributed. The run records contain its
-  scores and request ids.
+  scores and request ids, which are excluded from CC BY 4.0 (see "Our own content" above).
 - The agents were Gemma 4 31B (`google/gemma-4-31b-it`) through OpenRouter, served by Novita; DeepSeek V4.1 Flash
   (`deepseek/deepseek-v4.1-flash`) through OpenRouter, served by Morph; and Mistral Small 3.2 24B
   (`mistralai/Mistral-Small-3.2-24B-Instruct-2506`) on our own vLLM server. No model is redistributed. The run records
